@@ -23,10 +23,22 @@ components:
         port: 3000
     mountSources: true
 commands:
-  -
+  - 
     name: run the web app
     actions:
       - type: exec
         component: nodejs
-        command: nodemon app.js
-        workdir: ${CHE_PROJECTS_ROOT}/nodejs-web-app/app
+        command: >-
+          if [ ! -d 'node_modules' ]; then echo 'Install node dependencies...';
+          npm install; fi; nodemon app/app.js
+        workdir: '${CHE_PROJECTS_ROOT}/nodejs-web-app'
+
+  - 
+    name: stop the web app
+    actions:
+      - type: exec
+        component: nodejs
+        command: >-
+          node_server_pid=$(pgrep -fx '.*nodemon app/app.js' | tr "\\n" " ") &&
+          echo "Stopping node server with PID: ${node_server_pid}" && kill -15
+          ${node_server_pid} &>/dev/null && echo 'Done.'
