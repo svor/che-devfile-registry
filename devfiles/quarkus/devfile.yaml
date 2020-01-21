@@ -8,15 +8,14 @@ projects:
     source:
       type: git
       location: "https://github.com/quarkusio/quarkus-quickstarts.git"
-      sparseCheckoutDir: /getting-started/
 components:
   -
     type: chePlugin
-    reference: https://raw.githubusercontent.com/svor/che-plugin-registry/quarkus/v3/plugins/redhat/quarkus/1.1.1/meta.yaml
+    reference: https://raw.githubusercontent.com/eclipse/che-plugin-registry/master/v3/plugins/redhat/quarkus-java8/1.2.0/meta.yaml
   -
     type: dockerimage
     alias: maven
-    image: quay.io/eclipse/che-java8-maven:nightly
+    image: quay.io/eclipse/che-quarkus:nightly
     env:
       - name: JAVA_OPTS
         value: "-XX:MaxRAMPercentage=50.0 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10
